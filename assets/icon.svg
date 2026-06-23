@@ -28,6 +28,7 @@
   </g>
 
   <!-- hub -->
-  <circle cx="256" cy="256" r="26" fill="#e8edf7"/>
-  <circle cx="256" cy="256" r="9" fill="#070b16"/>
+  <circle cx="256" cy="256" r="28" fill="#e8edf7"/>
+  <text x="256" y="256" text-anchor="middle" dominant-baseline="central"
+        font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#070b16">z</text>
 </svg>

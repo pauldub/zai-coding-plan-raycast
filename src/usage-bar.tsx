@@ -1,17 +1,13 @@
-import { Color, Icon, MenuBarExtra, getPreferenceValues, open } from "@raycast/api";
+import { Color, Icon, MenuBarExtra, open } from "@raycast/api";
 import { useEffect, useState } from "react";
-import { fetchPlanUsage, PlanUsage, toolLabel } from "./api";
+import { fetchPlanUsage, getApiKey, PlanUsage, toolLabel } from "./api";
 import { colorFor, emojiFor, formatCountdown, severity } from "./format";
 
 const REFRESH_MS = 5 * 60 * 1000;
 const USAGE_URL = "https://z.ai/manage-apikey/coding-plan/personal/usage";
 
-interface Preferences {
-  apiKey: string;
-}
-
 export default function Command() {
-  const { apiKey } = getPreferenceValues<Preferences>();
+  const apiKey = getApiKey();
   const [data, setData] = useState<PlanUsage | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,19 +24,24 @@ export default function Command() {
     load();
     const timer = setInterval(load, REFRESH_MS);
     return () => clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loading = !data && !error;
   const windows = data?.windows ?? [];
   const worst =
-    windows.length > 0 ? windows.reduce((a, b) => (b.percentage > a.percentage ? b : a)) : undefined;
+    windows.length > 0
+      ? windows.reduce((a, b) => (b.percentage > a.percentage ? b : a))
+      : undefined;
   const sev = worst ? severity(worst.percentage) : "green";
 
-  const title = error ? "⚠︎" : worst ? `${emojiFor[sev]} ${worst.percentage}%` : "";
+  const title = error
+    ? "⚠︎"
+    : worst
+      ? `${emojiFor[sev]} ${worst.percentage}%`
+      : "";
   const tooltip = data
     ? `GLM Coding Plan · ${data.level} — ${data.windows.map((w) => `${w.label} ${w.percentage}%`).join(" · ")}`
-    : error ?? "Loading…";
+    : (error ?? "Loading…");
 
   return (
     <MenuBarExtra title={title} tooltip={tooltip} isLoading={loading}>
@@ -52,13 +53,20 @@ export default function Command() {
               icon={Icon.Globe}
               onAction={() => open(USAGE_URL)}
             />
-            <MenuBarExtra.Item title="Refresh" icon={Icon.ArrowClockwise} onAction={load} />
+            <MenuBarExtra.Item
+              title="Refresh"
+              icon={Icon.ArrowClockwise}
+              onAction={load}
+            />
           </MenuBarExtra.Section>
 
           {data.windows.map((w) => {
             const s = severity(w.percentage);
             return (
-              <MenuBarExtra.Section key={w.kind} title={`${w.label} · ${w.period}`}>
+              <MenuBarExtra.Section
+                key={w.kind}
+                title={`${w.label} · ${w.period}`}
+              >
                 <MenuBarExtra.Item
                   title={w.label}
                   subtitle={`${w.percentage}%`}

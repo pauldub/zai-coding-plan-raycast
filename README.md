@@ -33,7 +33,7 @@ usage directly from the z.ai API:
 
 Calls the undocumented but API-key-accessible endpoint
 `GET https://api.z.ai/api/monitor/usage/quota/limit` (the same one the z.ai
-dashboard's Usage Statistics page uses). No JWT, no cookies — just the API key.
+dashboard's Usage Statistics page uses).
 
 **Limitations (Tier 1):**
 - Prompt windows expose **percentage only** (no raw prompt counts) — that's all
@@ -50,8 +50,6 @@ npm install
 npm run build   # typecheck + bundle via `ray build`
 npm run dev     # hot-reload inside Raycast
 ```
-
-> An `icon.png` (512×512) is still **TODO** before publishing to the Raycast store.
 
 ## License
 

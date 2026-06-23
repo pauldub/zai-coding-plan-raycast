@@ -20,7 +20,10 @@ export const emojiFor: Record<Severity, string> = {
   red: "🔴",
 };
 
-export function formatCountdown(targetMs: number, now: number = Date.now()): string {
+export function formatCountdown(
+  targetMs: number,
+  now: number = Date.now(),
+): string {
   const diff = targetMs - now;
   if (diff <= 0) return "resets soon";
   const totalMin = Math.floor(diff / 60_000);
@@ -45,5 +48,7 @@ export function formatTimestamp(ms: number): string {
 export function progressBar(pct: number, width = 10): string {
   const clamped = Math.max(0, Math.min(100, pct));
   const filled = Math.round((clamped / 100) * width);
-  return "▰".repeat(filled) + "▱".repeat(width - filled) + ` ${Math.round(clamped)}%`;
+  return (
+    "▰".repeat(filled) + "▱".repeat(width - filled) + ` ${Math.round(clamped)}%`
+  );
 }

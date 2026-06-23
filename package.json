@@ -5,7 +5,6 @@
   "description": "Track your GLM Coding Plan (Lite/Pro/Max) quota — 5-hour & weekly prompt windows, MCP tools, reset countdowns, and a menu-bar indicator.",
   "icon": "icon.png",
   "author": "pauldub",
-  "owner": "pauldub",
   "license": "MIT",
   "categories": [
     "Developer Tools",
@@ -40,12 +39,16 @@
     "react": "^19.0.0"
   },
   "devDependencies": {
+    "@raycast/eslint-config": "^2.1.1",
     "@types/node": "^22.19.17",
     "@types/react": "^19.0.10",
+    "eslint": "^9.39.4",
+    "prettier": "^3.8.4",
     "typescript": "^5.4.0"
   },
   "scripts": {
     "build": "ray build",
-    "dev": "ray develop"
+    "dev": "ray develop",
+    "lint": "ray lint"
   }
 }

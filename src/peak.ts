@@ -13,9 +13,15 @@ export function getPeakStatus(now: Date = new Date()): PeakStatus {
 
   if (isPeak) {
     const hoursToEnd = PEAK_END_UTC - utcFraction;
-    return { isPeak: true, label: `Peak hours (3x quota cost) - ends in ${Math.ceil(hoursToEnd)}h` };
+    return {
+      isPeak: true,
+      label: `Peak hours (3x quota cost) - ends in ${Math.ceil(hoursToEnd)}h`,
+    };
   }
 
   const hoursToStart = (((PEAK_START_UTC - utcFraction) % 24) + 24) % 24;
-  return { isPeak: false, label: `Off-peak (lower cost) - peak in ${Math.round(hoursToStart)}h` };
+  return {
+    isPeak: false,
+    label: `Off-peak (lower cost) - peak in ${Math.round(hoursToStart)}h`,
+  };
 }

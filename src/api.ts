@@ -45,22 +45,34 @@ export class ZaiApiError extends Error {
 
 // ---- Fetch -----------------------------------------------------------------
 
-export async function fetchQuota(apiKey: string, signal?: AbortSignal): Promise<RawQuotaResponse> {
+export async function fetchQuota(
+  apiKey: string,
+  signal?: AbortSignal,
+): Promise<RawQuotaResponse> {
   let res: Response;
   try {
     res = await fetch(`${ZAI_BASE}/monitor/usage/quota/limit`, {
-      headers: { Authorization: `Bearer ${apiKey}`, Accept: "application/json" },
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: "application/json",
+      },
       signal,
     });
   } catch (e) {
-    throw new ZaiApiError(0, e instanceof Error ? e.message : "Network request failed");
+    throw new ZaiApiError(
+      0,
+      e instanceof Error ? e.message : "Network request failed",
+    );
   }
 
   let json: RawQuotaResponse;
   try {
     json = (await res.json()) as RawQuotaResponse;
   } catch {
-    throw new ZaiApiError(res.status || 0, `Unexpected response (HTTP ${res.status})`);
+    throw new ZaiApiError(
+      res.status || 0,
+      `Unexpected response (HTTP ${res.status})`,
+    );
   }
 
   if (!res.ok || !json.success || json.code !== 200 || !json.data) {
@@ -150,7 +162,10 @@ export function normalize(raw: RawQuotaResponse): PlanUsage {
   };
 }
 
-export async function fetchPlanUsage(apiKey: string, signal?: AbortSignal): Promise<PlanUsage> {
+export async function fetchPlanUsage(
+  apiKey: string,
+  signal?: AbortSignal,
+): Promise<PlanUsage> {
   return normalize(await fetchQuota(apiKey, signal));
 }
 
@@ -168,8 +183,10 @@ export function getApiKey(): string {
 
 export function friendlyError(err: unknown): string {
   if (err instanceof ZaiApiError) {
-    if (err.code === 1001) return "API key rejected. Open preferences to update it.";
-    if (err.code === 401) return "Authentication failed. Check your z.ai API key.";
+    if (err.code === 1001)
+      return "API key rejected. Open preferences to update it.";
+    if (err.code === 401)
+      return "Authentication failed. Check your z.ai API key.";
     return `${err.message} (code ${err.code})`;
   }
   if (err instanceof Error) return err.message;

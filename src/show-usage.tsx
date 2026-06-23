@@ -1,13 +1,6 @@
-import {
-  Action,
-  ActionPanel,
-  Color,
-  Icon,
-  List,
-  getPreferenceValues,
-} from "@raycast/api";
+import { Action, ActionPanel, Color, Icon, List } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
-import { fetchPlanUsage, friendlyError, toolLabel } from "./api";
+import { fetchPlanUsage, friendlyError, getApiKey, toolLabel } from "./api";
 import {
   colorFor,
   formatCountdown,
@@ -19,10 +12,6 @@ import { getPeakStatus } from "./peak";
 
 const USAGE_URL = "https://z.ai/manage-apikey/coding-plan/personal/usage";
 const APIKEY_URL = "https://z.ai/manage-apikey/apikey-list";
-
-interface Preferences {
-  apiKey: string;
-}
 
 function titleCase(s: string): string {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
@@ -46,7 +35,7 @@ function actions(revalidate: (() => void) | undefined) {
 }
 
 export default function Command() {
-  const { apiKey } = getPreferenceValues<Preferences>();
+  const apiKey = getApiKey();
   const { data, error, isLoading, revalidate } = usePromise(() =>
     fetchPlanUsage(apiKey),
   );
