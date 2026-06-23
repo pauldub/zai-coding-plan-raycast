@@ -1,0 +1,51 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "zai-coding-plan",
+  "title": "Z.ai Coding Plan Usage",
+  "description": "Track your GLM Coding Plan (Lite/Pro/Max) quota — 5-hour & weekly prompt windows, MCP tools, reset countdowns, and a menu-bar indicator.",
+  "icon": "icon.png",
+  "author": "pauldub",
+  "owner": "pauldub",
+  "license": "MIT",
+  "categories": [
+    "Developer Tools",
+    "Productivity"
+  ],
+  "commands": [
+    {
+      "name": "show-usage",
+      "title": "Show Coding Plan Usage",
+      "description": "View your GLM Coding Plan quota: 5-hour and weekly prompt windows, MCP tools, and reset countdowns.",
+      "mode": "view"
+    },
+    {
+      "name": "usage-bar",
+      "title": "Coding Plan Usage Bar",
+      "description": "Menu-bar indicator for your most-constrained GLM Coding Plan quota window.",
+      "mode": "menu-bar"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "apiKey",
+      "title": "Z.ai API Key",
+      "description": "Your z.ai API key (from z.ai → API Keys). Used to read your Coding Plan quota.",
+      "type": "password",
+      "required": true
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "1.104.19",
+    "@raycast/utils": "^2.2.6",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "@types/react": "^19.0.10",
+    "typescript": "^5.4.0"
+  },
+  "scripts": {
+    "build": "ray build",
+    "dev": "ray develop"
+  }
+}
